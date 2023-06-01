@@ -26,6 +26,9 @@ import { formatDistanceToNowStrict } from "date-fns";
 import Scrollbar from "../../../components/custom-scroll/Scrollbar";
 import dotAnimation from "../../../../public/animations/50817-three-dots.json";
 
+import { useDispatch } from "react-redux";
+import { toggleSidebar,toggleMobileSidebar } from "../../../store/customizer/CustomizerSlice";
+import ChatInsideSidebar from "./ChatInsideSideBar";
 interface ChatContentProps {
   toggleChatSidebar: () => void;
 }
@@ -35,8 +38,8 @@ const ChatContent: React.FC<ChatContentProps> = ({
 }: any) => {
   const [open, setOpen] = React.useState(true);
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
-  const {status} = useSelector((state) => state.openAiReducer);
-
+  const {status} = useSelector((state) => state.openAiReducer.ChatCompletion);
+const dispatch = useDispatch();
   const chatDetails: ChatsType = useSelector(
     (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1]
   );
@@ -53,7 +56,10 @@ const ChatContent: React.FC<ChatContentProps> = ({
       }
     }
   }, [chatDetails]);
-
+  useEffect(() => {
+    console.log('open', open);
+  }, [open]);
+    
   
 
   return (
@@ -73,7 +79,7 @@ const ChatContent: React.FC<ChatContentProps> = ({
                   mr: "10px",
                 }}
               >
-                <IconMenu2 stroke={1.5} onClick={toggleChatSidebar} />
+                <IconMenu2 stroke={1.5} onClick={() => dispatch(toggleMobileSidebar())} />
               </Box>
               <ListItem key={chatDetails.id} dense disableGutters>
                 <ListItemAvatar>
@@ -86,7 +92,12 @@ const ChatContent: React.FC<ChatContentProps> = ({
                   }
                 />
               </ListItem>
-              
+              <Stack direction={"row"}>
+               
+                <IconButton aria-label="sidebar" onClick={() => setOpen(!open)}>
+                  <IconDotsVertical stroke={1.5} />
+                </IconButton>
+              </Stack>
             </Box>
             <Divider />
           </Box>
@@ -272,7 +283,7 @@ const ChatContent: React.FC<ChatContentProps> = ({
             {/* ------------------------------------------- */}
             {/* Chat right sidebar Content */}
             {/* ------------------------------------------- */}
-            {/* {open ? (
+            {open ? (
               <Box flexShrink={0}>
                 <ChatInsideSidebar
                   isInSidebar={lgUp ? open : !open}
@@ -281,7 +292,7 @@ const ChatContent: React.FC<ChatContentProps> = ({
               </Box>
             ) : (
               ""
-            )} */}
+            )}
           </Box>
         </Box>
       ) : (

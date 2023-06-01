@@ -1,43 +1,33 @@
-import React, { useState } from 'react';
-import { Divider, Box } from '@mui/material';
+import React from 'react';
+import { Typography } from '@mui/material';
 import Breadcrumb from '../src/layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from '../src/components/container/PageContainer';
-import ChatSidebar from '../src/components/apps/chats/ChatSidebar';
-import ChatContent from '../src/components/apps/chats/ChatContent';
-import ChatMsgSent from '../src/components/apps/chats/ChatMsgSent';
-import AppCard from '../src/components/shared/AppCard';
+import DashboardCard from '../src/components/shared/DashboardCard';
+import FullLayout from '../src/layouts/full/FullLayoutWithPadding';
 
-const Chats = () => {
-  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+const BCrumb = [
+  {
+    to: '/',
+    title: 'Home',
+  },
+  {
+    title: 'Sample Page',
+  },
+];
 
+const Home=() =>{
   return (
-    <PageContainer>
-      {/* <Breadcrumb title="Chat app" subtitle="Messenger" /> */}
-      <AppCard>
-        {/* ------------------------------------------- */}
-        {/* Left part */}
-        {/* ------------------------------------------- */}
-
-        <ChatSidebar
-          isMobileSidebarOpen={isMobileSidebarOpen}
-          onSidebarClose={() => setMobileSidebarOpen(false)}
-        />
-        {/* ------------------------------------------- */}
-        {/* Right part */}
-        {/* ------------------------------------------- */}
-
-        <Box flexGrow={1} sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: 'inherit',
-        }} >
-          <ChatContent toggleChatSidebar={() => setMobileSidebarOpen(true)} />
-          <Divider />
-          <ChatMsgSent />
-        </Box>
-      </AppCard>
+    <PageContainer title="Sample Page" description="this is Sample page">
+      {/* breadcrumb */}
+      <Breadcrumb title="Sample Page" items={BCrumb} />
+      {/* end breadcrumb */}
+      <DashboardCard title="Sample Page">
+        <Typography>This is a sample page</Typography>
+      </DashboardCard>
     </PageContainer>
   );
-};
+}
 
-export default Chats;
+Home.layout = FullLayout
+
+export default Home;

@@ -44,8 +44,10 @@ const MyApp = (props: MyAppProps) => {
   const customizer = useSelector((state: AppState) => state.customizer);
 
   const layout = pageProps.layout || "Full";
-  // const Layout = layouts[Component.layout] || FullLayout;
-  const Layout = layouts['Blank']
+  const Layout = Component.layout || FullLayout;
+
+  console.log("layout", Layout);
+  
 
   return (
     <CacheProvider value={emotionCache}>

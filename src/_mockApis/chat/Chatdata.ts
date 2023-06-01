@@ -9,7 +9,7 @@ const chance = new Chance();
 const ChatData: ChatsType[] = [
 	{
 		id: 1,
-		name: "ChatGpt",
+		name: "ESG Assisstant",
 		excerpt: "Theme Developer",
 		messages: [],
 	},

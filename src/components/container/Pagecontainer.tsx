@@ -7,14 +7,14 @@ type Props = {
   description?: string;
   children: JSX.Element | JSX.Element[];
   title?: string;
+  sx?: any;
 };
 
-const PageContainer = ({ title, description, children }: Props) => (
+const PageContainer = ({ title, description, children,sx }: Props) => (
+  
   <HelmetProvider>
     <Box
-    sx={{
-      height: '100vh',
-    }}
+    sx={sx}
     >
       <Helmet>
         <title>{title}</title>

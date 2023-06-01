@@ -18,7 +18,8 @@ import {
   IconSend,
 } from "@tabler/icons-react";
 import { sendMsg } from "../../../store/apps/chat/ChatSlice";
-import { OpenAiResponse, getChatResponse } from "../../../store/apps/chat/OpenAiSlice";
+import { ChatsType, MessageType } from "../../../types/apps/chat";
+import { OpenAiResponse, getChatResponse } from "../../../store/apps/chat/components/ChatCompletion";
 
 const ChatMsgSent = () => {
   const [msg, setMsg] = React.useState<any>("");
@@ -27,22 +28,40 @@ const ChatMsgSent = () => {
 
   
   const id = useSelector((state) => state.chatReducer.chatContent);
-  const {status} = useSelector((state) => state.openAiReducer);
+  const chat:ChatsType = useSelector(
+    (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1]
+  );
+  const {status} = useSelector((state) => state.openAiReducer.ChatCompletion);
 
   const handleChatMsgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
     setMsg(e.target.value);
   };
 
   const newMsg = { id, msg };
 
   const onChatMsgSubmit = (e: any) => {
+    if (status === 'loading') return;
     e.preventDefault();
     e.stopPropagation();
     dispatch(sendMsg({
       ...newMsg,
       senderId: 0
     }));
-    dispatch(getChatResponse(msg)).unwrap().then((response:OpenAiResponse)=>{
+    const requestBody = []
+    chat.messages.forEach((msg:MessageType)=>{
+      const t = {
+        role : msg.senderId === id ? 'assistant' : 'user',
+        content : msg.msg
+      }
+      requestBody.push(t)
+    })
+    requestBody.push({
+      role : 'user',
+      content : msg
+    })
+
+    dispatch(getChatResponse(requestBody)).unwrap().then((response:OpenAiResponse)=>{
       
       
       dispatch(sendMsg({id: response.id, msg: response.content, senderId: response.id}))
@@ -51,24 +70,8 @@ const ChatMsgSent = () => {
     
     setMsg("");
   };
-  // const handleEnter = (e: any) => {
-  //   if (e.key === "Enter") {
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //     dispatch(sendMsg(newMsg));
-  //   console.log('new message sent: ', newMsg);
-
-  //     setMsg("");
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   document.addEventListener("keydown", handleEnter, false);
-
-  //   return () => {
-  //     document.removeEventListener("keydown", handleEnter, false);
-  //   };
-  // }, []);
+  
+ 
 
   return (
     <Box p={2} sx={{
@@ -94,6 +97,12 @@ const ChatMsgSent = () => {
           type="text"
           inputProps={{ "aria-label": "Type a Message" }}
           onChange={handleChatMsgChange.bind(null)}
+          onKeyPress={(event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      onChatMsgSubmit(event);
+    }
+  }}
         />
         <IconButton
           aria-label="delete"
