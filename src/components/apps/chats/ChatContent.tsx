@@ -28,7 +28,7 @@ import dotAnimation from "../../../../public/animations/50817-three-dots.json";
 
 import { useDispatch } from "react-redux";
 import { toggleSidebar,toggleMobileSidebar } from "../../../store/customizer/CustomizerSlice";
-import ChatInsideSidebar from "./ChatInsideSideBar";
+import ChatInsideSidebar from "./ChatInsideSidebar";
 interface ChatContentProps {
   toggleChatSidebar: () => void;
 }
@@ -287,6 +287,7 @@ const dispatch = useDispatch();
               <Box flexShrink={0}>
                 <ChatInsideSidebar
                   isInSidebar={lgUp ? open : !open}
+                  //@ts-ignore
                   chat={chatDetails}
                 />
               </Box>

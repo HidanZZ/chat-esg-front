@@ -17,22 +17,42 @@ import { IconDownload } from "@tabler/icons-react";
 
 interface chatType {
   isInSidebar?: boolean;
-  chat?: ChatsType;
 }
 
-const drawerWidth = 320;
+const drawerWidth = 340;
 
-const ChatInsideSidebar = ({ isInSidebar, chat }: chatType) => {
+const ChatInsideSidebar = ({ isInSidebar }: chatType) => {
+  const attachment = [
+					{
+						icon: "/images/chat/icon-adobe.svg",
+						file: "Attachement-1.pdf",
+						fileSize: "2MB",
+					},
+          {
+            icon: "/images/chat/icon-adobe.svg",
+            file: "Attachement-2.pdf",
+            fileSize: "2MB",
+          },
+          {
+            icon: "/images/chat/icon-adobe.svg",
+            file: "Attachement-3.pdf",
+            fileSize: "2MB",
+          },
+          {
+            icon: "/images/chat/icon-adobe.svg",
+            file: "Attachement-4.pdf",
+            fileSize: "2MB",
+          },
+          {
+            icon: "/images/chat/icon-adobe.svg",
+            file: "Attachement-5.pdf",
+            fileSize: "2MB",
+          }
+					
+				]
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
-  const totalAttachment = uniq(
-    flatten(chat?.messages.map((item) => item.attachment))
-  ).length;
-  const totalMedia =
-    uniq(
-      flatten(
-        chat?.messages.map((item) => (item?.type === "image" ? item.msg : null))
-      )
-    ).length - 1;
+  const totalAttachment = attachment.length;
+  
 
   const StyledStack = styled(Stack)(() => ({
     ".showOnHover": {
@@ -64,14 +84,13 @@ const ChatInsideSidebar = ({ isInSidebar, chat }: chatType) => {
         >
           
 
-          <Typography variant="h6" mt={5} mb={2}>
+          <Typography variant="h6" mt={2} mb={2}>
             Related Documents ({totalAttachment})
           </Typography>
           <Box>
-            {chat?.messages.map((c, index) => {
-              return (
-                <Stack spacing={2.5} key={index} direction="column">
-                  {c?.attachment?.map((a, index) => {
+            
+                <Stack spacing={2.5}  direction="column">
+                  {attachment.map((a, index) => {
                     return (
                       <StyledStack key={index} direction="row" gap={2}>
                         <Avatar
@@ -108,8 +127,7 @@ const ChatInsideSidebar = ({ isInSidebar, chat }: chatType) => {
                     );
                   })}
                 </Stack>
-              );
-            })}
+             
             {totalAttachment === 0 ? (
               <Alert severity="error">No Document Found!</Alert>
             ) : null}
