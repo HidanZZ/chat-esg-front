@@ -46,7 +46,6 @@ const MyApp = (props: MyAppProps) => {
   const layout = pageProps.layout || "Full";
   const Layout = Component.layout || FullLayout;
 
-  console.log("layout", Layout);
   
 
   return (

@@ -46,6 +46,12 @@ const Menuitems: MenuitemsType[] = [
 				icon: IconPoint,
 				href: "/comprendre/dialogues",
 			},
+			{
+				id: uniqueId(),
+				title: "Etudes",
+				icon: IconPoint,
+				href: "/comprendre/etudes",
+			},
 		],
 	},
 	{
