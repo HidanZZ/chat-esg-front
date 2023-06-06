@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import apiClient from '../../../../client/axios'
 
 type State = {
+  documentList: string[]
     history: [string | null, string | null,sourceDocument[] | null][]
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null | undefined | { [key: string]: string[] }
@@ -13,6 +14,7 @@ export type Payload = {
 }
 
 const initialState: State = {
+  documentList: [],
     history : [
         [null,'Hello there! I am a bot that can answer your questions about the PDF.',null],
     ],
@@ -58,6 +60,27 @@ export const getChatResponse = createAsyncThunk(
   }
 )
 
+export const getDocuments = createAsyncThunk(
+    'chat/getDocuments',
+    async (test:string, { rejectWithValue }) => {
+
+      try {
+          
+        const response = await apiClient.get<string[]>('/openai/docs')
+
+        return response.data
+      } catch (err: any) {
+        if (!err.response) {
+          throw err
+        }
+
+        return rejectWithValue(err.response.data)
+      }
+    }
+  
+)
+
+
 // Slice
 const ChatCompletionSlice = createSlice({
   name:  'chat/getChatResponse',
@@ -91,6 +114,15 @@ const ChatCompletionSlice = createSlice({
           state.error = action.error.message
         }
       })
+      
+      .addCase(getDocuments.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.documentList = action.payload
+
+      }
+      )
+      
+      
   }
 })
 
