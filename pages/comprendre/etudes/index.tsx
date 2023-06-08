@@ -84,7 +84,7 @@ const ChatPdf = () => {
           mb:6
         }}>
 					<Grid item xs={12} md={6}>
-						<PdfCard filename={documentList[0]} />
+						<PdfCard filename={documentList[2]} />
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Grid container spacing={6} sx={{
@@ -94,7 +94,7 @@ const ChatPdf = () => {
 								<PdfCard filename={documentList[1]} />
 							</Grid>
 							<Grid item xs={6} >
-								<PdfCard filename={documentList[2]} />
+								<PdfCard filename={documentList[0]} />
 							</Grid>
 							<Grid item xs={6}>
 								<PdfCard filename={documentList[3]} />
