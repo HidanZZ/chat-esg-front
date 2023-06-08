@@ -38,7 +38,7 @@ const Menuitems: MenuitemsType[] = [
 				id: uniqueId(),
 				title: "Tutoriel",
 				icon: IconPoint,
-				href: "/",
+				href: "/comprendre/tutoriel",
 			},
 			{
 				id: uniqueId(),
