@@ -14,51 +14,20 @@ const Logo = () => {
     display: "block",
   }));
 
-  if (customizer.activeDir === "ltr") {
     return (
       <LinkStyled href="/">
-        {customizer.activeMode === "dark" ? (
+        
           <Image
-            src="/images/logos/light-logo.svg"
+            src={"/images/logos/logo-esg.png"}
             alt="logo"
             height={customizer.TopbarHeight}
-            width={174}
+            width={180}
             priority
           />
-        ) : (
-          <Image
-            src={"/images/logos/dark-logo.svg"}
-            alt="logo"
-            height={customizer.TopbarHeight}
-            width={174}
-            priority
-          />
-        )}
+        
       </LinkStyled>
     );
-  }
-
-  return (
-    <LinkStyled href="/">
-      {customizer.activeMode === "dark" ? (
-        <Image
-          src="/images/logos/dark-rtl-logo.svg"
-          alt="logo"
-          height={customizer.TopbarHeight}
-          width={174}
-          priority
-        />
-      ) : (
-        <Image
-          src="/images/logos/light-logo-rtl.svg"
-          alt="logo"
-          height={customizer.TopbarHeight}
-          width={174}
-          priority
-        />
-      )}
-    </LinkStyled>
-  );
+ 
 };
 
 export default Logo;
