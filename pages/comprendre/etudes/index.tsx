@@ -229,6 +229,7 @@ const PdfCard = ({ filename }: { filename: string }) => {
       }}
     >
       <Image
+	  loader={()=> getImageUrl(filename)}
         alt={filename}
         fill={true}
         src={getImageUrl(filename)}
