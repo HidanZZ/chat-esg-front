@@ -92,10 +92,10 @@ const ChatMsgSent = () => {
           multiline
           maxRows={7}
           value={msg}
-          placeholder="Type a Message"
+          placeholder="Tapez a Message"
           size="small"
           type="text"
-          inputProps={{ "aria-label": "Type a Message" }}
+          inputProps={{ "aria-label": "Tapez a Message" }}
           onChange={handleChatMsgChange.bind(null)}
           onKeyPress={(event) => {
     if (event.key === 'Enter' && !event.shiftKey) {

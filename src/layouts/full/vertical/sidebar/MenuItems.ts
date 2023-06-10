@@ -27,7 +27,7 @@ import {
 const Menuitems: MenuitemsType[] = [
 	{
 		navlabel: true,
-		subheader: "Analyzer",
+		subheader: "Analyseur",
 	},
 	{
 		id: uniqueId(),
@@ -72,7 +72,7 @@ const Menuitems: MenuitemsType[] = [
 	},
 	{
 		id: uniqueId(),
-		title: "Strategy",
+		title: "Strategie",
 		icon: IconAperture,
 		href: "/#",
 	},

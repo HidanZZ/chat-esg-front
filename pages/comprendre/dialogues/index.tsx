@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Divider, Box, Chip } from '@mui/material';
+import { Divider, Box, Chip, useMediaQuery,Theme } from '@mui/material';
 import Breadcrumb from '../../../src/layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from '../../../src/components/container/PageContainer';
 import ChatSidebar from '../../../src/components/apps/chats/ChatSidebar';
@@ -14,15 +14,20 @@ import InlineItemCard from '../../../src/components/shared/InlineItemCard';
 import { getFrequentQuestions } from '../../../src/store/apps/chat/components/FrequentQuestions';
 import { ChatsType, MessageType } from '../../../src/types/apps/chat';
 import { OpenAiResponse, getChatResponse } from '../../../src/store/apps/chat/components/ChatCompletion';
+import ChatInsideSidebar from '../../../src/components/apps/chats/ChatInsideSidebar';
 
 const Chats = () => {
-  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 const dispatch = useDispatch<AppDispatch>();
 const {questions} = useSelector((state:any) => state.openAiReducer.FrequentQuestions);
+const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
 const id = useSelector((state:any) => state.chatReducer.chatContent);
   const chat:ChatsType = useSelector(
     (state:any) => state.chatReducer.chats[state.chatReducer.chatContent - 1]
   );
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
   useEffect(() => {
     dispatch(fetchChats());
     dispatch(getFrequentQuestions('test'))
@@ -77,7 +82,7 @@ const id = useSelector((state:any) => state.chatReducer.chatContent);
           flexDirection: 'column',
           height: 'inherit',
         }} >
-          <ChatContent toggleChatSidebar={() => setMobileSidebarOpen(true)} />
+          <ChatContent toggleChatSidebar={toggleSidebar} />
           <InlineItemCard>
                 {
                   questions && questions.map((question:any)=>{
@@ -91,6 +96,9 @@ const id = useSelector((state:any) => state.chatReducer.chatContent);
           <Divider />
           <ChatMsgSent />
         </Box>
+        <ChatInsideSidebar
+          isInSidebar={sidebarOpen || lgUp}
+        />
       </AppCard>
     </PageContainer>
   );
