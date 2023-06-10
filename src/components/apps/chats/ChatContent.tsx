@@ -29,6 +29,7 @@ import dotAnimation from "../../../../public/animations/50817-three-dots.json";
 import { useDispatch } from "react-redux";
 import { toggleSidebar,toggleMobileSidebar } from "../../../store/customizer/CustomizerSlice";
 import ChatInsideSidebar from "./ChatInsideSidebar";
+import fr from 'date-fns/locale/fr';
 interface ChatContentProps {
   toggleChatSidebar: () => void;
 }
@@ -94,7 +95,7 @@ const dispatch = useDispatch();
               </ListItem>
               <Stack direction={"row"}>
                
-                <IconButton aria-label="sidebar" onClick={() => setOpen(!open)}>
+                <IconButton aria-label="sidebar" onClick={() => toggleChatSidebar()}>
                   <IconDotsVertical stroke={1.5} />
                 </IconButton>
               </Stack>
@@ -138,14 +139,15 @@ const dispatch = useDispatch();
                                   color="grey.400"
                                   mb={1}
                                 >
-                                  {chatDetails.name},{" "}
+                                  {chatDetails.name},{" "}il y a{" "}
                                   {formatDistanceToNowStrict(
                                     new Date(chat.createdAt),
                                     {
                                       addSuffix: false,
+                                      locale: fr
                                     }
-                                  )}{" "}
-                                  ago
+                                  )}
+                                  
                                 </Typography>
                               ) : null}
                               {chat.type === "text" ? (
@@ -196,13 +198,14 @@ const dispatch = useDispatch();
                                   color="grey.400"
                                   mb={1}
                                 >
+                                  il y a{" "}
                                   {formatDistanceToNowStrict(
                                     new Date(chat.createdAt),
                                     {
                                       addSuffix: false,
+                                      locale: fr
                                     }
-                                  )}{" "}
-                                  ago
+                                  )}
                                 </Typography>
                               ) : null}
                               {chat.type === "text" ? (
@@ -283,7 +286,7 @@ const dispatch = useDispatch();
             {/* ------------------------------------------- */}
             {/* Chat right sidebar Content */}
             {/* ------------------------------------------- */}
-            {open ? (
+            {/* {open ? (
               <Box flexShrink={0}>
                 <ChatInsideSidebar
                   isInSidebar={lgUp ? open : !open}
@@ -293,7 +296,7 @@ const dispatch = useDispatch();
               </Box>
             ) : (
               ""
-            )}
+            )} */}
           </Box>
         </Box>
       ) : (

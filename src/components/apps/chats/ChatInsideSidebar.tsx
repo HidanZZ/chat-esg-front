@@ -50,7 +50,6 @@ const ChatInsideSidebar = ({ isInSidebar }: chatType) => {
           }
 					
 				]
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
   const totalAttachment = attachment.length;
   
 
@@ -76,8 +75,7 @@ const ChatInsideSidebar = ({ isInSidebar }: chatType) => {
             right: "0",
             height: "100%",
             background: (theme) => theme.palette.background.paper,
-            boxShadow: lgUp ? null : (theme) => theme.shadows[9],
-            position: lgUp ? "relative" : "absolute",
+            position:  "relative" ,
             borderColor: (theme) => theme.palette.divider,
           }}
           p={3}
@@ -85,7 +83,8 @@ const ChatInsideSidebar = ({ isInSidebar }: chatType) => {
           
 
           <Typography variant="h6" mt={2} mb={2}>
-            Related Documents ({totalAttachment})
+            Documents Reliés
+            ({totalAttachment})
           </Typography>
           <Box>
             
